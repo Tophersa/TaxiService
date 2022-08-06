@@ -1,16 +1,18 @@
-import { View, Text,StyleSheet, FlatList, TouchableOpacity, TouchableHighlight } from 'react-native'
+import { View, Text,StyleSheet, FlatList, TouchableOpacity, Dimensions, useWindowDimensions } from 'react-native'
 import React, {useRef, useMemo, useCallback} from 'react'
 import BottomSheet, { BottomSheetFlatList } from '@gorhom/bottom-sheet';
 import { EvilIcons,FontAwesome5, MaterialIcons } from '@expo/vector-icons';
 import locationHistory from '../../../assets/data/locationHistory.json'
 import COLOURS from '../../../assets/utilities/COLOURS';
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation } from '@react-navigation/native';
+import MapView from 'react-native-maps';
 
 //const navigation = useNavigation();
 
 const HomeScreen = ({navigation}) => {
     const bottomSheetRef = useRef(null);
     const snapPoints = useMemo(() => ['30%', '70%'], []);
+    const {width, height}=useWindowDimensions();
 
     const renderItem = useCallback(
         ({ item }) => (
@@ -21,6 +23,9 @@ const HomeScreen = ({navigation}) => {
 
   return (
     <View style={{backgroundColor:"blue", flex:1}}>
+      
+      <MapView style={styles.map} showsUserLocation followsUserLocation/>
+      
       <BottomSheet ref={bottomSheetRef}
         index={0} snapPoints={snapPoints}
         handleIndicatorStyle={{backgroundColor: "lightgray", width:50, height:7}}
@@ -91,5 +96,9 @@ const styles = StyleSheet.create({
         fontWeight : "700",
         fontSize: 19,
     },
+    map: {
+        width: Dimensions.get('window').width,
+        height: Dimensions.get('window').height,
+      },
   });
 export default HomeScreen
