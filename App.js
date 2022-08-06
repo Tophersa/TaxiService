@@ -3,11 +3,14 @@ import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import HomeScreen from './src/screens/HomeScreen';
 import Router from './src/navigation/Router';
+import 'react-native-gesture-handler';
+import DrawerNav from './src/navigation/Drawer';
 
 export default function App() {
   return (
     <NavigationContainer>
-        <Router/>
+        
+        <DrawerNav/>
       <StatusBar style="auto" />
       </NavigationContainer>
   );

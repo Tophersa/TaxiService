@@ -3,9 +3,12 @@ import React, {useRef, useMemo, useCallback} from 'react'
 import BottomSheet, { BottomSheetFlatList } from '@gorhom/bottom-sheet';
 import { EvilIcons,FontAwesome5, MaterialIcons } from '@expo/vector-icons';
 import locationHistory from '../../../assets/data/locationHistory.json'
+import COLOURS from '../../../assets/utilities/COLOURS';
+import { useNavigation } from '@react-navigation/native'
 
+//const navigation = useNavigation();
 
-const HomeScreen = () => {
+const HomeScreen = ({navigation}) => {
     const bottomSheetRef = useRef(null);
     const snapPoints = useMemo(() => ['30%', '70%'], []);
 
@@ -27,7 +30,7 @@ const HomeScreen = () => {
                 <EvilIcons name="search" size={26} color="black" />
                 <Text style={styles.whereTo}>Where to?</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.buttonRight}>
+            <TouchableOpacity style={styles.buttonRight} onPress={()=> navigation.openDrawer()}>
                 <FontAwesome5 name="map-marked-alt" size={24} color="black" />
             </TouchableOpacity>
         </View>
@@ -47,7 +50,7 @@ const LocationHistory = ({name, subName}) => {
  
   return (
     <TouchableOpacity>
-    <View style={{flexDirection: "row", alignItems: "center", margin:10,paddingLeft:10, paddingBottom:10, borderBottomWidth: 1, borderBottomColor: "lightgray"}}>
+    <View style={{flexDirection: "row", alignItems: "center", margin:10,paddingLeft:10, paddingBottom:10, borderBottomWidth: 1, borderBottomColor: COLOURS.myGray}}>
         <MaterialIcons name="access-time" size={24} color="gray" />
         <View style={{marginHorizontal: 10}}>
             <Text style={{fontWeight: "400", fontSize: 17}} numberOfLines={1}>{name}</Text>
@@ -67,7 +70,7 @@ const styles = StyleSheet.create({
       margin: 10,
     },
     buttonLeft: {
-        backgroundColor: "lightgray",
+        backgroundColor: COLOURS.lightBlue,
         height: 55,
         width: "82%",
         borderRadius: 10,
@@ -76,7 +79,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
     },
     buttonRight: {
-        backgroundColor: "lightgray",
+        backgroundColor: COLOURS.lightBlue,
         borderRadius: 10,
         alignItems: "center",
         justifyContent: "center",
