@@ -1,7 +1,7 @@
 import { View, Text,StyleSheet, FlatList, TouchableOpacity, Dimensions, useWindowDimensions } from 'react-native'
 import React, {useRef, useMemo, useCallback} from 'react'
 import BottomSheet, { BottomSheetFlatList } from '@gorhom/bottom-sheet';
-import { EvilIcons,FontAwesome5, MaterialIcons } from '@expo/vector-icons';
+import { EvilIcons,FontAwesome5, MaterialIcons, Entypo } from '@expo/vector-icons';
 import locationHistory from '../../../assets/data/locationHistory.json'
 import COLOURS from '../../../assets/utilities/COLOURS';
 import { useNavigation } from '@react-navigation/native';
@@ -24,19 +24,20 @@ const HomeScreen = ({navigation}) => {
   return (
     <View style={{backgroundColor:"blue", flex:1}}>
       
-      <MapView style={styles.map} showsUserLocation followsUserLocation/>
-      
+    
+      <MapView style={styles.map} showsUserLocation followsUserLocation provider={'google'}/>
+        
       <BottomSheet ref={bottomSheetRef}
         index={0} snapPoints={snapPoints}
         handleIndicatorStyle={{backgroundColor: "lightgray", width:50, height:7}}
       >
         <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.buttonLeft}>
+            <TouchableOpacity style={styles.buttonLeft} onPress={()=> navigation.navigate('DestinationSearch')}>
                 <EvilIcons name="search" size={26} color="black" />
                 <Text style={styles.whereTo}>Where to?</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.buttonRight} onPress={()=> navigation.openDrawer()}>
-                <FontAwesome5 name="map-marked-alt" size={24} color="black" />
+              <Entypo name="menu" size={30} color="black" />
             </TouchableOpacity>
         </View>
 

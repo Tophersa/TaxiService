@@ -13,14 +13,15 @@ const DrawerNav = () => {
   return (
     <Drawer.Navigator drawerContent={props=> <CustomDrawer {...props}/>} 
     screenOptions={{
-        headerShown: false,
+        
         drawerActiveBackgroundColor: "#AED6F1", 
         drawerActiveTintColor: "black",
         drawerLabelStyle:{marginLeft:-25, fontSize:16}}} 
     >
       <Drawer.Screen name="Home" component={HomeScreen}
         options={{
-            drawerIcon:({color})=>(<Ionicons name="home-outline" size={24} color={color} />)
+            drawerIcon:({color})=>(<Ionicons name="home-outline" size={24} color={color} />),
+            headerShown: false,
         }}
       />
       <Drawer.Screen name="Payment" component={LocationInputScreen} 

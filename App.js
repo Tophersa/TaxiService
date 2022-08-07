@@ -4,13 +4,13 @@ import { NavigationContainer } from '@react-navigation/native';
 import HomeScreen from './src/screens/HomeScreen';
 import Router from './src/navigation/Router';
 import 'react-native-gesture-handler';
-import DrawerNav from './src/navigation/Drawer';
+import DrawerNav from './src/navigation/DrawerNav';
+import myFile from './src/screens/HomeScreen/myFile';
 
 export default function App() {
   return (
     <NavigationContainer>
-        
-        <DrawerNav/>
+        <Router/>
       <StatusBar style="auto" />
       </NavigationContainer>
   );
