@@ -15,7 +15,7 @@ const SearchResultsScreen = ({navigation}) => {
     const snapPoints = useMemo(() => ['70%', '80%'], []);
     const {width, height}=useWindowDimensions();
 
-    console.warn(route.params)
+    //console.warn(route.params)
 
   return (
     <View style={{backgroundColor:"blue", flex:1}}>
@@ -72,7 +72,7 @@ const SearchResultsScreen = ({navigation}) => {
           </View>
         </TouchableOpacity>
 
-        <TouchableOpacity style={{backgroundColor:COLOURS.primary, width:"95%", justifyContent:"center",alignItems:"center", margin:10, height:50, borderRadius:35}}>
+        <TouchableOpacity onPress={()=>navigation.navigate('ArrivingScreen')} style={{backgroundColor:COLOURS.primary, width:"95%", justifyContent:"center",alignItems:"center", margin:10, height:50, borderRadius:35}}>
           <Text style={{color:"white", fontSize:18, fontWeight:"700"}}>Book Now</Text>
         </TouchableOpacity>
       </BottomSheet>

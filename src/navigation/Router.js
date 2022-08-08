@@ -10,6 +10,8 @@ import DrawerNav from './DrawerNav';
 import DestinationSearch from '../screens/DestinationSearch';
 import SearchResultsScreen from '../screens/SearchResultsScreen';
 import PaymemtScreen from '../screens/PaymentScreen';
+import ConfirmedScreen from '../screens/ConfirmedScreen';
+import ArrivingScreen from '../screens/ArrivingScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -25,7 +27,9 @@ const Router = () => {
       <Stack.Screen name="DestinationSearch" component={DestinationSearch } options={{headerTitle: "Your route"}}/>
       <Stack.Screen name="SearchResultsScreen" component={SearchResultsScreen } options={{headerShown: false}}/>
       <Stack.Screen name="PaymentScreen" component={PaymemtScreen} options={{headerTitle: ""}}/>
-
+      <Stack.Screen name="ConfirmedScreen" component={ConfirmedScreen} options={{headerShown: false}}/>
+      <Stack.Screen name="ArrivingScreen" component={ArrivingScreen} options={{headerShown: false}}/>
+      
       
     </Stack.Navigator>
   )
