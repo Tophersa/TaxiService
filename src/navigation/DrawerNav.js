@@ -6,6 +6,8 @@ import LocationInputScreen from '../screens/LocationInputScreen';
 import CustomDrawer from '../components/CustomDrawer';
 import { Ionicons,MaterialCommunityIcons } from '@expo/vector-icons';
 import COLOURS from '../../assets/utilities/COLOURS';
+import PaymemtScreen from '../screens/PaymentScreen';
+
 
 const Drawer = createDrawerNavigator();
 
@@ -24,7 +26,7 @@ const DrawerNav = () => {
             headerShown: false,
         }}
       />
-      <Drawer.Screen name="Payment" component={LocationInputScreen} 
+      <Drawer.Screen name="PaymentScreen" component={PaymemtScreen} 
         options={{
             drawerIcon:({color})=>(<Ionicons name="wallet-outline" size={24} color={color} />)
         }}

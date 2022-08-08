@@ -8,6 +8,8 @@ import DestinationScreen from '../screens/LocationInputScreen/DestinationScreen'
 import PickUpLocationScreen from '../screens/LocationInputScreen/PickUpLocationScreen';
 import DrawerNav from './DrawerNav';
 import DestinationSearch from '../screens/DestinationSearch';
+import SearchResultsScreen from '../screens/SearchResultsScreen';
+import PaymemtScreen from '../screens/PaymentScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -21,7 +23,9 @@ const Router = () => {
       <Stack.Screen name="DestinationScreen" component={DestinationScreen} />
       <Stack.Screen name="PickUpLocationScreen" component={PickUpLocationScreen} />
       <Stack.Screen name="DestinationSearch" component={DestinationSearch } options={{headerTitle: "Your route"}}/>
-      
+      <Stack.Screen name="SearchResultsScreen" component={SearchResultsScreen } options={{headerShown: false}}/>
+      <Stack.Screen name="PaymentScreen" component={PaymemtScreen} options={{headerTitle: ""}}/>
+
       
     </Stack.Navigator>
   )

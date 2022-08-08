@@ -18,7 +18,7 @@ const DestinationSearch = (props) => {
 
   const checkNavigation = () => {
     if (originPlace && destinationPlace) {
-      navigation.navigate('SearchResults', {
+      navigation.navigate('SearchResultsScreen', {
         originPlace,
         destinationPlace,
       })
@@ -38,12 +38,9 @@ const DestinationSearch = (props) => {
           placeholder="Where from?"
           onPress={(data, details = null) => {
             setOriginPlace({data, details});
-            console.log(data)
           }}
           enablePoweredByContainer={false}
           suppressDefaultStyles
-          currentLocation={true}
-          currentLocationLabel='Current location'
           nearbyPlacesAPI="GooglePlacesSearch"
           GooglePlacesSearchQuery={{rankby: 'distance'}}
           styles={{
@@ -69,6 +66,7 @@ const DestinationSearch = (props) => {
           }}
           enablePoweredByContainer={false}
           suppressDefaultStyles
+          GooglePlacesSearchQuery={{rankby: 'distance'}}
           styles={{
             textInput: styles.textInput,
             container: {

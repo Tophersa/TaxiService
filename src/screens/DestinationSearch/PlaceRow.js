@@ -15,6 +15,7 @@ const PlaceRow = ({ data }) => {
       {/* <Text style={styles.locationText}>{data.description || data.vicinity}</Text> */}
     </View>
     </View>
+    
   );
 };
 
