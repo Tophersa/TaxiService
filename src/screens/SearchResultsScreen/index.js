@@ -1,27 +1,80 @@
-import { View, Text,StyleSheet,Image, TouchableOpacity, Dimensions, useWindowDimensions } from 'react-native'
-import React, {useRef, useMemo, useCallback} from 'react'
+import { View, Text,StyleSheet,Image, TouchableOpacity, Dimensions, useWindowDimensions, ActivityIndicator } from 'react-native'
+import React, {useRef, useMemo, useEffect, useState} from 'react'
 import BottomSheet, { BottomSheetFlatList } from '@gorhom/bottom-sheet';
-import { EvilIcons,FontAwesome5, MaterialCommunityIcons, Entypo } from '@expo/vector-icons';
+import { EvilIcons,FontAwesome5, MaterialCommunityIcons, Entypo, Ionicons, FontAwesome } from '@expo/vector-icons';
 import COLOURS from '../../../assets/utilities/COLOURS';
 import { useRoute } from '@react-navigation/native';
-import MapView from 'react-native-maps';
-
-
+import MapView, { Marker } from 'react-native-maps';
+import * as Location from 'expo-location';
+import MapViewDirections from 'react-native-maps-directions';
 
 const SearchResultsScreen = ({navigation}) => {
-    
+  const [myLocation, setMyLocation] = useState(null);
+
     const route = useRoute()
+    const origin = {
+      latitude: route.params.originPlace.details.geometry.location.lat, 
+      longitude: route.params.originPlace.details.geometry.location.lng
+    };
+    const destination = {
+      latitude: route.params.destinationPlace.details.geometry.location.lat, 
+      longitude: route.params.destinationPlace.details.geometry.location.lng
+    };
+
     const bottomSheetRef = useRef(null);
-    const snapPoints = useMemo(() => ['70%', '80%'], []);
+    const snapPoints = useMemo(() => ['50%', '60%'], []);
     const {width, height}=useWindowDimensions();
 
     //console.warn(route.params)
+    useEffect(() => {
+      (async () => {
+        let { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== 'granted') {
+          setErrorMsg('Permission to access location was denied');
+          return;
+        }
+  
+        let location = await Location.getCurrentPositionAsync({});
+        setMyLocation({
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude
+        });
+      })();
+    }, []);
+
+    //console.warn(myLocation);
+
+  if(!myLocation && route.params){
+    return <ActivityIndicator size="large" color={COLOURS.primary}/>
+  }
 
   return (
     <View style={{backgroundColor:"blue", flex:1}}>
       
     
-      <MapView style={styles.map} showsUserLocation followsUserLocation provider={'google'}/>
+      <MapView style={styles.map} showsUserLocation
+       provider={'google'} initialRegion={{
+          latitude: route.params.originPlace.details.geometry.location.lat,
+          longitude: route.params.originPlace.details.geometry.location.lng,
+          longitudeDelta: 0.03,
+          latitudeDelta: 0.03
+       }}>
+       <Marker coordinate={{latitude: route.params.originPlace.details.geometry.location.lat, 
+                            longitude: route.params.originPlace.details.geometry.location.lng
+                            }}
+        ><Ionicons name="pin-sharp" size={50} color={COLOURS.primary} /></Marker>
+       <Marker coordinate={{latitude: route.params.destinationPlace.details.geometry.location.lat, 
+                            longitude: route.params.destinationPlace.details.geometry.location.lng
+                            }}
+        ><FontAwesome name="dot-circle-o" size={40} color="#212F3C" /></Marker>
+       <MapViewDirections
+          origin={origin}
+          destination={destination}
+          apikey={"AIzaSyAdpaNGsAySEV9W50eZydnCXbYM6iX_2kQ"}
+          strokeWidth={5}
+          strokeColor="#EC7063"
+         />
+       </MapView>
         
       <BottomSheet ref={bottomSheetRef}
         index={0} snapPoints={snapPoints}
@@ -31,38 +84,38 @@ const SearchResultsScreen = ({navigation}) => {
       
         <View>
           <TouchableOpacity 
-          style={{flexDirection: 'row', margin: 10, padding:10, borderBottomWidth:1,borderBottomColor: COLOURS.myGray, alignItems:"center"}}
+          style={{flexDirection: 'row', margin: 5, padding:10, borderBottomWidth:1,borderBottomColor: COLOURS.myGray, alignItems:"center"}}
           onPress={()=> navigation.goBack()}
           >
-            <MaterialCommunityIcons name="star-box" size={30} color={COLOURS.primary} />
-            <Text style={{fontSize:18, color:"#212F3C", marginLeft: 10, fontWeight: "700"}}>{route.params.originPlace.description}</Text>
+            <MaterialCommunityIcons name="star-box" size={25} color={COLOURS.primary} />
+            <Text style={{fontSize:14, color:"#212F3C", marginLeft: 10, fontWeight: "700" }} numberOfLines={1}>{route.params.originPlace.data.description}</Text>
           </TouchableOpacity>
 
           <TouchableOpacity 
-          style={{flexDirection: 'row', margin: 10, padding:10, borderBottomWidth:1,borderBottomColor: COLOURS.myGray, alignItems:"center"}}
+          style={{flexDirection: 'row', margin: 5, padding:10, borderBottomWidth:1,borderBottomColor: COLOURS.myGray, alignItems:"center"}}
           onPress={()=> navigation.goBack()}
           >
-            <MaterialCommunityIcons name="star-box" size={30} color="#212F3C" />
-            <Text style={{fontSize:18, color:"#212F3C", marginLeft: 10, fontWeight: "700"}}>{route.params.originPlace.destinationPlace}</Text>
+            <MaterialCommunityIcons name="star-box" size={25} color="#212F3C" />
+            <Text style={{fontSize:14, color:"#212F3C", marginLeft: 10, fontWeight: "700"}} numberOfLines={1}>{route.params.destinationPlace.data.description}</Text>
           </TouchableOpacity>
         </View>
         
-        <Text style={{color:"black", marginHorizontal:20,marginBottom:10,marginVertical:10, fontWeight:"700", fontSize:17}}>AVAILABLE RIDES</Text>
-        <View style={{flexDirection: "row", margin:10}}>
-          <TouchableOpacity style={{padding: 10,backgroundColor:COLOURS.primary, borderRadius:10, width: 100, margin: 10, justifyContent: "center", alignItems: "center"}}>
-              <Image style={{height: 60, width: 90}} source={require('../../../assets/carTypes/carType.png')}/>
+        <Text style={{color:"black", marginHorizontal:20,marginBottom:5,marginVertical:5, fontWeight:"700", fontSize:15}}>AVAILABLE RIDES</Text>
+        <View style={{flexDirection: "row", margin:5}}>
+          <TouchableOpacity style={{padding: 2,backgroundColor:COLOURS.primary, borderRadius:10, width: 100, margin: 5, justifyContent: "center", alignItems: "center"}}>
+              <Image style={{height: 40, width: 90}} resizeMode={'center'} source={require('../../../assets/carTypes/carType.png')}/>
               <Text style={{color: "white", fontWeight:"700", fontSize:14, alignSelf:"flex-start"}}>STANDARD</Text>
               <Text style={{color: "white", fontSize:16, alignSelf:"flex-start"}}>R53</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={{padding:10, backgroundColor:COLOURS.lightBlue, borderRadius:10, width: 100, margin: 10, justifyContent: "center", alignItems:"center"}}>
-                <Image style={{height: 60, width: 90}} source={require('../../../assets/carTypes/truckType.png')}/>
+          <TouchableOpacity style={{padding:2, backgroundColor:COLOURS.lightBlue, borderRadius:10, width: 100, margin: 5, justifyContent: "center", alignItems:"center"}}>
+                <Image style={{height: 40, width: 90}} resizeMode={'center'} source={require('../../../assets/carTypes/truckType.png')}/>
                 <Text style={{color: "black", fontWeight:"700", fontSize:14, alignSelf:"flex-start"}}>HIRE A BIKE</Text>
-                <Text style={{color: "black", fontSize:14, alignSelf:"flex-start"}}>Comming</Text>
-                <Text style={{color: "black", fontSize:14, alignSelf:"flex-start"}}>soon...</Text>
+                <Text style={{color: "black", fontSize:13, alignSelf:"flex-start"}}>Comming</Text>
+                <Text style={{color: "black", fontSize:13, alignSelf:"flex-start"}}>soon...</Text>
           </TouchableOpacity>
         </View>
 
-        <TouchableOpacity onPress={()=> navigation.navigate('PaymentScreen')} style={{flexDirection:"row", alignItems:"center", margin:10, height:50}}>
+        <TouchableOpacity onPress={()=> navigation.navigate('PaymentScreen')} style={{flexDirection:"row", alignItems:"center", margin:5, height:40}}>
           <View style={{backgroundColor:COLOURS.lightBlue, borderRadius: 5, width: "70%", marginRight:10,height:50,flexDirection:"row", justifyContent: "space-between",alignItems:"center", padding:10, borderWidth:1, borderColor:"lightgray"}}>
             <Text style={{ fontWeight:"700" }}>CASH</Text>
             <Entypo name="chevron-right" size={20} color="black" />
@@ -72,7 +125,7 @@ const SearchResultsScreen = ({navigation}) => {
           </View>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={()=>navigation.navigate('ArrivingScreen')} style={{backgroundColor:COLOURS.primary, width:"95%", justifyContent:"center",alignItems:"center", margin:10, height:50, borderRadius:35}}>
+        <TouchableOpacity onPress={()=>navigation.navigate('ArrivingScreen')} style={{backgroundColor:COLOURS.primary, width:"95%", justifyContent:"center",alignItems:"center", margin:5, height:40, borderRadius:18}}>
           <Text style={{color:"white", fontSize:18, fontWeight:"700"}}>Book Now</Text>
         </TouchableOpacity>
       </BottomSheet>
