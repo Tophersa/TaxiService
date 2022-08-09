@@ -37,7 +37,7 @@ const HomeScreen = ({navigation}) => {
                 <Text style={styles.whereTo}>Where to?</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.buttonRight} onPress={()=> navigation.openDrawer()}>
-              <Entypo name="menu" size={30} color="black" />
+              <Entypo name="menu" size={30} color={COLOURS.primary} />
             </TouchableOpacity>
         </View>
 
@@ -57,7 +57,7 @@ const LocationHistory = ({name, subName}) => {
   return (
     <TouchableOpacity>
     <View style={{flexDirection: "row", alignItems: "center", margin:10,paddingLeft:10, paddingBottom:10, borderBottomWidth: 1, borderBottomColor: COLOURS.myGray}}>
-        <MaterialIcons name="access-time" size={24} color="gray" />
+        <MaterialIcons name="access-time" size={24} color={COLOURS.primary} />
         <View style={{marginHorizontal: 10}}>
             <Text style={{fontWeight: "400", fontSize: 17}} numberOfLines={1}>{name}</Text>
             <Text style={{color: "gray", fontSize: 17}} numberOfLines={1}>{subName}</Text>

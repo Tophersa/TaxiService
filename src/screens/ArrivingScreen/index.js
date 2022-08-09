@@ -28,8 +28,8 @@ const ArrivingScreen = ({navigation}) => {
       >
         <Text style={{margin:10, fontSize:25,fontWeight:"700"}}>Arriving in 2 mins</Text>
         <Text style={{fontSize:18, margin:10, color:"gray"}} numberOfLines={2}>Toyota Corolla</Text>
-        <View style={{margin:10,padding:5, backgroundColor:"lightgray", borderRadius:5}}>
-            <Text style={{fontSize:18, color:"black"}} numberOfLines={2}>CF295059</Text>
+        <View style={{margin:10,padding:5, backgroundColor:COLOURS.primary, borderRadius:5, alignSelf:"center"}}>
+            <Text style={{fontSize:18, color:"white", fontWeight:"700"}} numberOfLines={2}>CF295059</Text>
         </View>
         
         <View style={{flexDirection:"row", justifyContent:"space-around", margin:10, borderTopWidth:1,borderTopColor:"lightgray",padding:10}}>  
@@ -50,10 +50,12 @@ const ArrivingScreen = ({navigation}) => {
                 <Text>Safety</Text>
             </View>
         </View>
-        <TouchableOpacity onPress={()=>navigation.navigate('DestinationSearch')} style={{flexDirection:"row",alignItems:"center", borderTopWidth:1, borderTopColor:"lightgray", margin:10, width:320,padding:10}}>
+        <TouchableOpacity onPress={()=>navigation.navigate('DestinationSearch')} style={{flexDirection:"row",justifyContent:"space-between",alignItems:"center", borderTopWidth:1, borderTopColor:"lightgray", margin:10, width:320,padding:10,}}>
             <Entypo name="location-pin" size={25} color={COLOURS.primary} />
-            <Text style={{fontSize:17, marginHorizontal:10}} numberOfLines={1} ellipsizeMode={'middle'}>Respublica Rosscommon,Claremont, Rosscommon str, South Africa</Text>
+            <Text style={{fontSize:17, marginHorizontal:10}} numberOfLines={1} ellipsizeMode={'middle'}>{route.params}</Text>
+            <View style={{alignSelf:"flex-end"}}>
             <FontAwesome5 name="pen" size={20} color="lightgray" />
+            </View>
         </TouchableOpacity>
       </BottomSheet>
     </View>

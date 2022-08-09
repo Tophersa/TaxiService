@@ -66,7 +66,7 @@ const SearchResultsScreen = ({navigation}) => {
        <Marker coordinate={{latitude: route.params.destinationPlace.details.geometry.location.lat, 
                             longitude: route.params.destinationPlace.details.geometry.location.lng
                             }}
-        ><FontAwesome name="dot-circle-o" size={40} color="#212F3C" /></Marker>
+        ><FontAwesome name="dot-circle-o" size={40} color="navy" /></Marker>
        <MapViewDirections
           origin={origin}
           destination={destination}
@@ -101,17 +101,19 @@ const SearchResultsScreen = ({navigation}) => {
         </View>
         
         <Text style={{color:"black", marginHorizontal:20,marginBottom:5,marginVertical:5, fontWeight:"700", fontSize:15}}>AVAILABLE RIDES</Text>
-        <View style={{flexDirection: "row", margin:5}}>
-          <TouchableOpacity style={{padding: 2,backgroundColor:COLOURS.primary, borderRadius:10, width: 100, margin: 5, justifyContent: "center", alignItems: "center"}}>
-              <Image style={{height: 40, width: 90}} resizeMode={'center'} source={require('../../../assets/carTypes/carType.png')}/>
-              <Text style={{color: "white", fontWeight:"700", fontSize:14, alignSelf:"flex-start"}}>STANDARD</Text>
-              <Text style={{color: "white", fontSize:16, alignSelf:"flex-start"}}>R53</Text>
+        <View style={{flexDirection: "row", margin:5, justifyContent:"space-between"}}>
+          <TouchableOpacity style={{padding: 2,backgroundColor:COLOURS.primary, borderRadius:10, width: "45%", margin: 5, alignItems: "center", flexDirection:"row"}}>
+              <Image style={{height: 40, width: 90}} resizeMode={'center'} source={require('../../../assets/carTypes/carType2.png')}/>
+              <View style={{padding:2}}>
+                <Text style={{color: "white", fontSize:18, alignSelf:"center",fontWeight:"700"}}>R53</Text>
+              </View>
           </TouchableOpacity>
-          <TouchableOpacity style={{padding:2, backgroundColor:COLOURS.lightBlue, borderRadius:10, width: 100, margin: 5, justifyContent: "center", alignItems:"center"}}>
-                <Image style={{height: 40, width: 90}} resizeMode={'center'} source={require('../../../assets/carTypes/truckType.png')}/>
-                <Text style={{color: "black", fontWeight:"700", fontSize:14, alignSelf:"flex-start"}}>HIRE A BIKE</Text>
-                <Text style={{color: "black", fontSize:13, alignSelf:"flex-start"}}>Comming</Text>
-                <Text style={{color: "black", fontSize:13, alignSelf:"flex-start"}}>soon...</Text>
+          <TouchableOpacity style={{padding:2, backgroundColor:COLOURS.lightBlue, borderRadius:10, width: "45%",height:75, margin: 5, alignItems:"center", flexDirection:"row"}}>
+                <Image style={{height: 45, width: 95}} resizeMode={'center'} source={require('../../../assets/carTypes/expCarType.png')}/>
+                <View style={{padding:2}}>
+                  <Text style={{color: "black", fontSize:13, alignSelf:"flex-start"}}>Comming</Text>
+                  <Text style={{color: "black", fontSize:13, alignSelf:"flex-start"}}>soon...</Text>
+                </View>
           </TouchableOpacity>
         </View>
 
@@ -125,7 +127,7 @@ const SearchResultsScreen = ({navigation}) => {
           </View>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={()=>navigation.navigate('ArrivingScreen')} style={{backgroundColor:COLOURS.primary, width:"95%", justifyContent:"center",alignItems:"center", margin:5, height:40, borderRadius:18}}>
+        <TouchableOpacity onPress={()=>navigation.navigate('ArrivingScreen',route.params.destinationPlace.data.description)} style={{backgroundColor:COLOURS.primary, width:"95%", justifyContent:"center",alignItems:"center", margin:5, height:40, borderRadius:18}}>
           <Text style={{color:"white", fontSize:18, fontWeight:"700"}}>Book Now</Text>
         </TouchableOpacity>
       </BottomSheet>
